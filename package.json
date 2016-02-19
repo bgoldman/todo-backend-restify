@@ -1,0 +1,27 @@
+{
+  "name": "todo-backend-restify",
+  "version": "0.1.0",
+  "description": "An implementation of Todo Backend using Restify.",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bgoldman/todo-backend-restify"
+  },
+  "author": "Brandon Goldman",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "dredd": "^1.0.4",
+    "restify": "^4.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  },
+  "engines": {
+    "node": "^5.5.0"
+  },
+  "scripts": {
+    "dredd": "dredd --language=nodejs --server='nc -z localhost 3000 || npm start' api-spec.apib http://localhost:3000",
+    "start": "nodemon server.js"
+  }
+}
