@@ -11,17 +11,22 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "dredd": "^1.0.4",
     "restify": "^4.0.3"
   },
   "devDependencies": {
+    "aglio": "^2.2.0",
+    "dredd": "^1.0.4",
+    "forever": "^0.15.1",
+    "markdown-preview": "^0.3.6",
     "nodemon": "^1.8.1"
   },
   "engines": {
     "node": "^5.5.0"
   },
   "scripts": {
-    "dredd": "dredd --language=nodejs --server='nc -z localhost 3000 || npm start' api-spec.apib http://localhost:3000",
-    "start": "nodemon server.js"
+    "start": "(sleep 3 && open http://localhost:3000) && nodemon server.js",
+    "preview-api-spec": "(sleep 3 && open http://localhost:4000) & aglio -i api-spec.apib --theme-variables=streak --theme-template=triple -s -p 4000",
+    "preview-readme": "forever ./node_modules/.bin/markdown-preview README.md -p 4001",
+    "test-api-spec": "dredd --language=nodejs --server='nc -z localhost 3000 || node server.js' api-spec.apib http://localhost:3000"
   }
 }

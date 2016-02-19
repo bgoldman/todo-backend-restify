@@ -2,6 +2,15 @@
 
 An implementation of Todo Backend using Restify.
 
+## Contents
+
+* [Tech Stack](#techstack)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Developing](#developing)
+* [Testing](#testing)
+* [Documentation](#documentation)
+
 ## Tech Stack
 
 * Node.js (backend langauge)
@@ -79,5 +88,19 @@ URL: http://127.0.0.1:3000/
 Run Dredd to check the API against the spec
 
 ```bash
-npm run dredd
+npm run test-api-spec
+```
+
+## Documentation
+
+Run Algio to preview the API spec as you edit it, with hot reloading as you edit it
+
+```bash
+npm run preview-api-spec
+```
+
+Run Markdown Preview to preview the README file as you edit it, with hot reloading as you edit it
+
+```bash
+npm run preview-readme
 ```
