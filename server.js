@@ -2,6 +2,7 @@ var restify = require('restify');
 
 var Package = require('./package.json');
 
+// rather than hardcode the name and version, just pull it out of package.json :)
 var server = restify.createServer({
     name:    Package.name,
     version: Package.version
@@ -31,16 +32,25 @@ server.use(restify.queryParser());
 // serves static documents from the `/public` directory
 server.get(/\/static\/?.*/, restify.serveStatic({ directory: './public' }));
 
+// set the default charset is UTF-8, saving us from having to set it in every route
 server.pre(function(request, response, next) {
     response.charSet('utf-8');
+
     return next();
 });
 
+// api/index.js will include all of our API routes
 require('./src/api')(server);
 
+// we need to allow a port override in deployments using env vars
 var port = process.env.PORT || 3000;
-var host = process.env.HOST || '127.0.0.1';
 
-server.listen(port, host, function() {
-    console.log('%s running Restify server at %s', server.name, server.url);
+// this defaults to localhost, but need it to be null in production
+var host = process.env.HOST || null;
+
+console.log('PORTS', port, process.env.PORT);
+
+// let's go!
+server.listen(port, function() {
+    console.log('%s running Restify server on port %s', server.name, port);
 });

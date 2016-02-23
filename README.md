@@ -4,7 +4,7 @@ An implementation of Todo Backend using Restify.
 
 Or at least it started out that way.
 
-Over time, I'm making this project more opinionated by adding different npm scripts, packages, build tools, deployment, and other functionality. These will serve as sensible defaults and save a tremendous amount of time. Using these defaults, a developer can build any kind of app, and start with a combination of some well-researched quality tools in one convneient place.
+Over time, I'm making this project more opinionated by adding different npm scripts, packages, build tools, deployment, and other functionality. These will serve as sensible defaults and save a tremendous amount of time. Using these defaults, a developer can build any kind of app, and start with a combination of some well-researched quality tools in one convenient place.
 
 This will eventually evolve into a fantastic skeleton project for any new Javascript API project that agrees with the philisophy of this repo.
 
@@ -17,6 +17,7 @@ A [meatier](https://github.com/mattkrick/meatier) alternative. Like meatier, but
 * [Directory Structure](#directory-structure)
 * [Developing](#developing)
 * [Testing](#testing)
+* [Deployment](#deployment)
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 
@@ -106,6 +107,50 @@ Run Dredd to check the API against the spec
 npm run test-api-spec
 ```
 
+## Deployment
+
+### Code
+
+#### Setup
+
+Set up Heroku
+
+```bash
+brew install heroku
+```
+
+Run Heroku once to log in
+
+```bash
+heroku
+```
+
+Link your local repo to Heroku
+
+```bash
+heroku git:remote todo-backend-restify # the last arg is the name of your heroku app
+```
+
+#### Releasing
+
+Deployment is handled automatically by Heroku. Make sure the "GitHub Connected" deployment option is enabled.
+
+Whenever master gets updated, Heroku updates itself.
+
+Deploy manually if you aren't using connected repos
+
+```bash
+git push heroku master
+```
+
+#### Debugging
+
+Check the Heroku logs
+
+```bash
+heroku logs
+```
+
 ## Documentation
 
 Run Algio to preview the API spec as you edit it, with hot reloading as you edit it
@@ -132,4 +177,4 @@ Or just want to tell say that you found this useful?
 
 ...then reach out! :)
 
-Please feel free to create issues on Github and/or fork the repo and make pull requests.
+Please feel free to create issues on GitHub and/or fork the repo and make pull requests.
