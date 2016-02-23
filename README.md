@@ -23,16 +23,23 @@ A [meatier](https://github.com/mattkrick/meatier) alternative. Like meatier, but
 
 ## Tech Stack
 
+### API
+
+Category | Name                                             | Comments
+-------- | ------------------------------------------------ | --------
+Routing  | [Restify](http://www.restify.com/)               | The fastest API router, and pleasantly minimalist
+Testing  | [Dredd](http://dredd.readthedocs.org/en/latest/) | Very useful tool for testing your API endpoints from your existing API Blueprint specs
+Docs     | [Aglio](https://github.com/danielgtaylor/aglio)  | Convenient API doc generator using your existing API Blueprint specs
+Specs    | [API Blueprint](https://apiblueprint.org/)       | Fantastic API spec format using Markdown
+
+### Utilities
+
 Category                      | Name                                                     | Comments
 ----------------------------- | -------------------------------------------------------- | --------
-Routing                       | [Restify](http://www.restify.com/)                        | The fastest API router, and pleasantly minimalist
 Process manager in production | [forever](https://github.com/foreverjs/forever)          | The best tool for keeping your node server running
 Process manager on dev        | [nodemon](http://nodemon.io/)                            | The best tool for restarting your node process every time you make a code change
-API testing                   | [Dredd](http://dredd.readthedocs.org/en/latest/)         | Very useful tool for testing your API endpoints from your existing API Blueprint specs
-API docs                      | [Aglio](https://github.com/danielgtaylor/aglio)          | Convenient API doc generator using your existing API Blueprint specs
-API specs                     | [API Blueprint](https://apiblueprint.org/)               | Fantastic API spec format using Markdown
-Utility library               | [lodash](https://lodash.com/)                            | Arguably the best Javascript utility library around
 Configuration                 | [config](https://github.com/lorenwest/node-config)       | Has everything we need: auto-loads based on environment name, applies the chosen config file over a default config file, performs a deep merge, and doesn't allow accidental or intentional config overriding in code
+Utility library               | [lodash](https://lodash.com/)                            | Arguably the best Javascript utility library around
 Markdown previewer            | [Markdown Live](https://github.com/mobily/markdown-live) | Hot reload a live preview page showing the markdown file you're editing, like the README
 
 ## Installation
