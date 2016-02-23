@@ -27,27 +27,30 @@ A [meatier](https://github.com/mattkrick/meatier) alternative. Like meatier, but
 
 * Node.js (backend langauge)
 * Restify (backend framework)
-* nodemon (process manager)
+* forever (process manager in production)
+* nodemon (process manager on dev)
 * Dredd (API testing)
 * API Blueprint (API spec)
 
 ### Everything
 
-Category          | Name                                             | Comments
------------------ | ------------------------------------------------ | --------
-Routing           | [Restify](http://www.restify.com)                | The fastest API router, and pleasantly minimalist
-Process manager   | [nodemon](http://nodemon.io/)                    | The best tool for keeping your node server running, and restarting your node process every time you make a code change
-API testing       | [Dredd](http://dredd.readthedocs.org/en/latest/) | Very useful tool for testing your API endpoints from your existing API Blueprint specs
-API docs          | [Aglio](https://github.com/danielgtaylor/aglio)  | Convenient API doc generator using your existing API Blueprint specs
-API specs         | [API Blueprint](https://apiblueprint.org/)       | Fantastic API spec format using Markdown
-Markdown          | [Markdwon Live](https://github.com/mobily/markdown-live) | Helpful tool to hot reload a live preview page showing the markdown file you're editing, we use this for the README
+Category                      | Name                                                     | Comments
+----------------------------- | -------------------------------------------------------- | --------
+Routing                       | [Restify](http://www.restify.com)                        | The fastest API router, and pleasantly minimalist
+Process manager in production | [forever](https://github.com/foreverjs/forever)          | The best tool for keeping your node server running
+Process manager on dev        | [nodemon](http://nodemon.io/)                            | The best tool for restarting your node process every time you make a code change
+API testing                   | [Dredd](http://dredd.readthedocs.org/en/latest/)         | Very useful tool for testing your API endpoints from your existing API Blueprint specs
+API docs                      | [Aglio](https://github.com/danielgtaylor/aglio)          | Convenient API doc generator using your existing API Blueprint specs
+API specs                     | [API Blueprint](https://apiblueprint.org/)               | Fantastic API spec format using Markdown
+Utility library               | [lodash](https://lodash.com/)                            | Arguably the best Javascript utility library around
+Markdown previewer            | [Markdown Live](https://github.com/mobily/markdown-live) | Hot reload a live preview page showing the markdown file you're editing, like the README
 
 ## Installation
 
 ### Prerequisites
 
-* Node.js >= 5.5.0
-* npm >= 3.7.3
+* Node.js >= 5.6.0
+* npm >= 3.6.0
 
 If you don't have Node.js and npm, download Homebrew, download nvm,
 and then install node using that, which also comes with npm.
@@ -125,15 +128,16 @@ Run Heroku once to log in
 heroku
 ```
 
-Link your local repo to Heroku
+Link your local repo to Heroku (the last arg is the name of your heroku app)
 
 ```bash
-heroku git:remote todo-backend-restify # the last arg is the name of your heroku app
+heroku git:remote todo-backend-restify
 ```
 
 #### Releasing
 
-Deployment is handled automatically by Heroku. Make sure the "GitHub Connected" deployment option is enabled.
+Deployment is handled automatically by Heroku.
+Make sure the "GitHub Connected" deployment option is enabled.
 
 Whenever master gets updated, Heroku updates itself.
 
@@ -153,13 +157,14 @@ heroku logs
 
 ## Documentation
 
-Run Algio to preview the API spec as you edit it, with hot reloading as you edit it
+Run Aglio to preview the API spec as you edit it, with hot reloading
 
 ```bash
 npm run preview-api-spec
 ```
 
-Run Markdown Preview to preview the README file as you edit it, with hot reloading as you edit it
+Run Markdown Preview to preview the README file as you edit it,
+with hot reloading
 
 ```bash
 npm run preview-readme
@@ -167,7 +172,8 @@ npm run preview-readme
 
 ## Contributing
 
-Do you know of other packages that you think would be useful for a general purpose but very useful Javascript API skeleton project?
+Do you know of other packages that you think would be useful for a general
+purpose but very useful Javascript API skeleton project?
 
 Do you think any of these defaults can be improved with alternate packages?
 
@@ -177,4 +183,5 @@ Or just want to tell say that you found this useful?
 
 ...then reach out! :)
 
-Please feel free to create issues on GitHub and/or fork the repo and make pull requests.
+Please feel free to create issues on GitHub and/or fork the repo and make pull
+requests.
