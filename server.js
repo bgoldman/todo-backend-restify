@@ -1,3 +1,4 @@
+var config  = require('config');
 var restify = require('restify');
 
 var Package = require('./package.json');
@@ -43,12 +44,7 @@ server.pre(function(request, response, next) {
 require('./src/api')(server);
 
 // we need to allow a port override in deployments using env vars
-var port = process.env.PORT || 3000;
-
-// this defaults to localhost, but need it to be null in production
-var host = process.env.HOST || null;
-
-console.log('PORTS', port, process.env.PORT);
+var port = config.get('server.port');
 
 // let's go!
 server.listen(port, function() {

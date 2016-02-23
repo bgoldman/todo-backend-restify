@@ -1,0 +1,6 @@
+{
+    "server": {
+        "environment": undefined,
+        "port":        3000
+    }
+}

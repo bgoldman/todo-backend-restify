@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "aglio": "^2.2.0",
+    "config": "^1.19.0",
     "dredd": "^1.0.5",
     "markdown-live": "^1.0.8",
     "nodemon": "^1.8.1"
