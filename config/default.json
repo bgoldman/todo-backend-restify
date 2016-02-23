@@ -1,6 +1,6 @@
 {
     "server": {
-        "api_root":    "http://localhost",
+        "api_root":    "http://localhost:3000",
         "environment": null,
         "port":        3000
     }

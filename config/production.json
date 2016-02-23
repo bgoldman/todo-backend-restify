@@ -1,5 +1,3 @@
-var os = require('hostname');
-
 module.exports = {
     "server": {
         "api_root":    "http://todo-backend-restify.heroku.com",
