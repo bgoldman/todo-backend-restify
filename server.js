@@ -23,6 +23,7 @@ server.use(restify.bodyParser());
 
 // supports Cross-Origin Resource Sharing
 server.use(restify.CORS());
+server.use(restify.fullResponse());
 
 // gzips the response if the client accepts it
 server.use(restify.gzipResponse());

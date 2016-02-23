@@ -22,15 +22,16 @@ module.exports = function(api) {
 
     api.post('/todos', function(request, response, next) {
         var todo = Todo.create(request.body);
+
         response.status(201);
         response.send(todo);
         next();
     });
 
     api.del('/todos', function(request, response, next) {
-        Todo.archive();
+        Todo.deleteAll();
 
-        response.send(204, []);
+        response.send(200, Todo.all());
         next();
     });
 
@@ -39,10 +40,8 @@ module.exports = function(api) {
         next();
     });
 
-    api.post('/todos/:id', findTodoBefore, function(request, response, next) {
-        request.todo.completed = request.body.completed;
-
-        request.todo.save();
+    api.patch('/todos/:id', findTodoBefore, function(request, response, next) {
+        request.todo.save(request.body);
 
         response.send(request.todo);
         next();

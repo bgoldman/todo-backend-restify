@@ -30,17 +30,23 @@ Category | Name                                             | Comments
 Routing  | [Restify](http://www.restify.com/)               | The fastest API router, and pleasantly minimalist
 Testing  | [Dredd](http://dredd.readthedocs.org/en/latest/) | Very useful tool for testing your API endpoints from your existing API Blueprint specs
 Docs     | [Aglio](https://github.com/danielgtaylor/aglio)  | Convenient API doc generator using your existing API Blueprint specs
-Specs    | [API Blueprint](https://apiblueprint.org/)       | Fantastic API spec format using Markdown
+Specs    | [API Blueprint](https://apiblueprint.org/)       | Portable API spec format using Markdown, supported by Apiary, Aglio, and more
 
-### Utilities
+### Application
 
-Category                      | Name                                                     | Comments
------------------------------ | -------------------------------------------------------- | --------
-Process manager in production | [forever](https://github.com/foreverjs/forever)          | The best tool for keeping your node server running
-Process manager on dev        | [nodemon](http://nodemon.io/)                            | The best tool for restarting your node process every time you make a code change
-Configuration                 | [config](https://github.com/lorenwest/node-config)       | Has everything we need: auto-loads based on environment name, applies the chosen config file over a default config file, performs a deep merge, and doesn't allow accidental or intentional config overriding in code
-Utility library               | [lodash](https://lodash.com/)                            | Arguably the best Javascript utility library around
-Markdown previewer            | [Markdown Live](https://github.com/mobily/markdown-live) | Hot reload a live preview page showing the markdown file you're editing, like the README
+Category                      | Name                                               | Comments
+----------------------------- | -------------------------------------------------- | --------
+Process manager in production | [forever](https://github.com/foreverjs/forever)    | The best tool for keeping your node server running
+Process manager on dev        | [nodemon](http://nodemon.io/)                      | The best tool for restarting your node process every time you make a code change
+Configuration                 | [config](https://github.com/lorenwest/node-config) | Has everything we need: auto-loads based on environment name, applies the chosen config file over a default config file, performs a deep merge, and doesn't allow accidental or intentional config overriding in code
+
+### Libraries
+
+Category           | Name                                                     | Comments
+------------------ | -------------------------------------------------------- | --------
+Utility library    | [lodash](https://lodash.com/)                            | Fantastic functional Javascript library; arguably the best Javascript utility library around
+HTTP requests      | [SuperAgent](http://visionmedia.github.io/superagent/)   | The most popular client/server agnostic HTTP request library
+Markdown previewer | [Markdown Live](https://github.com/mobily/markdown-live) | Hot reload a live preview page showing the markdown file you're editing, like the README
 
 ## Installation
 
@@ -154,10 +160,10 @@ heroku logs
 
 ## Documentation
 
-Run Aglio to preview the API spec as you edit it, with hot reloading
+Run Aglio to preview the API docs as you edit the spec, with hot reloading
 
 ```bash
-npm run preview-api-spec
+npm run preview-api-docs
 ```
 
 Run Markdown Preview to preview the README file as you edit it,

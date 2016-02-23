@@ -1,35 +1,57 @@
 var _      = require('lodash');
 var config = require('config');
 
-var todos = {};
+var Store = {
+    lastId: 0,
+    todos:  {}
+};
 
 var Todo = function(data) {
-    this.title     = data.title;
+    if (!data) data = {};
 
+    this.title     = data.title;
     this.completed = false;
+    this.order     = data.order || 1;
 };
+
+Todo.basePath = '/todos';
 
 Todo.prototype.delete = function() {
-    delete todos[this.id];
+    delete Store.todos[this.id];
 };
 
-Todo.prototype.save = function() {
-    if (!this.id) {
-        var lastTodo = _.last(todos);
-        this.id      = lastTodo ? (lastTodo.id + 1) : 1;
+Todo.prototype.save = function(data) {
+    if (!this.id) this.id = ++Store.lastId;
+
+    if (!_.isEmpty(data)) {
+        _.each(['title', 'completed', 'order'], (function(field) {
+            if (typeof data[field] != 'undefined') this[field] = data[field];
+        }).bind(this));
     }
 
-    this.url = config.get('server.api_root') + '/todos/' + this.id;
+    this.url = Todo.url(this.id);
 
-    todos[this.id] = this;
+    Store.todos[this.id] = this;
 };
 
 Todo.all = function() {
-    return _.values(todos);;
+    return _.values(Store.todos);;
 };
 
 Todo.archive = function() {
-    _.reject(todos, function(todo) { return todo.completed; });
+    _.reject(Store.todos, function(todo) { return todo.completed; });
+};
+
+Todo.build = function(data) {
+    if (!data) data = {};
+
+    var todo = new this(data);
+
+    if (data.id) todo.id = data.id;
+
+    if (todo.id) todo.url = Todo.url(todo.id);
+
+    return todo;
 };
 
 Todo.create = function(data) {
@@ -40,8 +62,20 @@ Todo.create = function(data) {
     return todo;
 };
 
-Todo.findById = function(id) {
-    return todos[id];
+Todo.deleteAll = function() {
+    Store.todos = {};
 };
+
+Todo.findById = function(id) {
+    return Store.todos[id];
+};
+
+Todo.url = function(id) {
+    return config.get('server.api_root') + this.urlPath(id);
+};
+
+Todo.urlPath = function(id) {
+    return this.basePath + '/' + id;
+}
 
 module.exports = Todo;

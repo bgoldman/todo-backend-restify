@@ -14,17 +14,16 @@ Todos API is a todo storage backend for [TodoMVC](//todomvc.com).
 
 ## Todo Collection [/todos]
 
-
-
 ### Create a Todo [POST]
 
 The `completed` attribute will always be set as `false` for new Todo items.
 
 **Body Parameters**
 
-Name  | Type   | Status   | Default
------ | ------ | -------- | -------
-title | string | required | *n/a*
+Name  | Type    | Status   | Default
+----- | ------- | -------- | -------
+title | string  | required | *n/a*
+order | boolean | optional | 1
 
 **Returns**
 
@@ -41,7 +40,9 @@ A new Todo item.
             {
                 "id": 1,
                 "title": "dredd",
-                "completed": false
+                "completed": false,
+                "order": 1,
+                "url": "http://todo-backend-restify.heroku.com/todos/1"
             }
 
 
@@ -57,31 +58,32 @@ A list of Todo items in the order they were created.
             [{
                 "id": 1,
                 "title": "dredd",
-                "completed": false
+                "completed": false,
+                "order": 1,
+                "url": "http://todo-backend-restify.heroku.com/todos/1"
             }]
 
 
 
-### Archive completed Todos [DELETE]
+### Delete All Todos [DELETE]
 
-All Todo items which have their `completed` attribute set to `true` will be archived.
+All Todo items will be deleted.
 These Todo items will no longer be returned by the API.
 
 **Returns**
 
-A null value.
+An empty array.
 
-+ Response 204
++ Response 200
+
+            []
 
 
 
 ## Todo [/todos/{id}]
 
-
-
 + Parameters
     + id: `1` (integer) - The ID of the Todo
-
 
 ### Get a Todo [GET]
 
@@ -100,7 +102,9 @@ The requested Todo item, or a 404 Not Found error.
             {
                 "id": 1,
                 "title": "dredd",
-                "completed": false
+                "completed": false,
+                "order": 1,
+                "url": "http://todo-backend-restify.heroku.com/todos/1"
             }
 
 + Response 404 (application/json; charset=utf-8)
@@ -112,7 +116,7 @@ The requested Todo item, or a 404 Not Found error.
 
 
 
-### Update a Todo [PUT]
+### Update a Todo [PATCH]
 
 **Query Parameters**
 
@@ -125,7 +129,8 @@ id   | integer | required | *n/a*
 Name      | Type    | Status   | Default
 --------- | ------- | -------- | -------
 title     | string  | optional | *n/a*
-completed | boolean | optional | *n/a*
+completed | boolean | optional | false
+order     | boolean | optional | 1
 
 **Returns**
 
@@ -135,7 +140,9 @@ The updated Todo item, or a 404 Not Found error.
 
             {
                 "title": "dredd",
-                "completed": true
+                "completed": true,
+                "order": 1,
+                "url": "http://todo-backend-restify.heroku.com/todos/1"
             }
 
 + Response 200 (application/json; charset=utf-8)
@@ -143,7 +150,9 @@ The updated Todo item, or a 404 Not Found error.
             {
                 "id": 1,
                 "title": "dredd",
-                "completed": true
+                "completed": true,
+                "order": 1,
+                "url": "http://todo-backend-restify.heroku.com/todos/1"
             }
 
 + Response 404 (application/json; charset=utf-8)
