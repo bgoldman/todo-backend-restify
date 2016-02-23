@@ -1,14 +1,34 @@
 FORMAT: 1A
 
-# Todos API
+# Todo Backend API
 
 Todos API is a todo storage backend for [TodoMVC](//todomvc.com).
 
+
+
+
+
 # Group Todos
 
-# Todos Collection [/todos]
 
-## Create a Todo [POST]
+
+## Todo Collection [/todos]
+
+
+
+### Create a Todo [POST]
+
+The `completed` attribute will always be set as `false` for new Todo items.
+
+**Body Parameters**
+
+Name  | Type   | Status   | Default
+----- | ------ | -------- | -------
+title | string | required | *n/a*
+
+**Returns**
+
+A new Todo item.
 
 + Request (application/json)
 
@@ -19,41 +39,97 @@ Todos API is a todo storage backend for [TodoMVC](//todomvc.com).
 + Response 201 (application/json; charset=utf-8)
 
             {
-                "id": 42,
+                "id": 1,
                 "title": "dredd",
                 "completed": false
             }
 
-## List all Todos [GET]
+
+
+### List all Todos [GET]
+
+**Returns**
+
+A list of Todo items in the order they were created.
 
 + Response 200 (application/json; charset=utf-8)
 
             [{
-                "id": 42,
+                "id": 1,
                 "title": "dredd",
                 "completed": false
             }]
 
-## Archive completed Todos [DELETE]
+
+
+### Archive completed Todos [DELETE]
+
+All Todo items which have their `completed` attribute set to `true` will be archived.
+These Todo items will no longer be returned by the API.
+
+**Returns**
+
+A null value.
 
 + Response 204
 
-# Todo [/todos/{id}]
+
+
+## Todo [/todos/{id}]
+
+
 
 + Parameters
-  + id (required, number, `42`)
+    + id: `1` (integer) - The ID of the Todo
 
-## Get a Todo [GET]
+
+### Get a Todo [GET]
+
+**Query Parameters**
+
+Name | Type    | Status   | Default
+---- | ------- | -------- | -------
+id   | integer | required | *n/a*
+
+**Returns**
+
+The requested Todo item, or a 404 Not Found error.
 
 + Response 200 (application/json; charset=utf-8)
 
             {
-                "id": 42,
+                "id": 1,
                 "title": "dredd",
                 "completed": false
             }
 
-## Update a Todo [PUT]
++ Response 404 (application/json; charset=utf-8)
+
+            {
+                "code": "NotFoundError",
+                "message": "Todo not found."
+            }
+
+
+
+### Update a Todo [PUT]
+
+**Query Parameters**
+
+Name | Type    | Status   | Default
+---- | ------- | -------- | -------
+id   | integer | required | *n/a*
+
+**Body Parameters**
+
+Name      | Type    | Status   | Default
+--------- | ------- | -------- | -------
+title     | string  | optional | *n/a*
+completed | boolean | optional | *n/a*
+
+**Returns**
+
+The updated Todo item, or a 404 Not Found error.
 
 + Request (application/json)
 
@@ -65,11 +141,37 @@ Todos API is a todo storage backend for [TodoMVC](//todomvc.com).
 + Response 200 (application/json; charset=utf-8)
 
             {
-                "id": 42,
+                "id": 1,
                 "title": "dredd",
                 "completed": true
             }
 
-## Delete a Todo [DELETE]
++ Response 404 (application/json; charset=utf-8)
+
+            {
+                "code": "NotFoundError",
+                "message": "Todo not found."
+            }
+
+
+
+### Delete a Todo [DELETE]
+
+**Query Parameters**
+
+Name | Type    | Status   | Default
+---- | ------- | -------- | -------
+id   | integer | required | *n/a*
+
+**Returns**
+
+The null value, or a 404 Not Found error.
 
 + Response 204
+
++ Response 404 (application/json; charset=utf-8)
+
+            {
+                "code": "NotFoundError",
+                "message": "Todo not found."
+            }
