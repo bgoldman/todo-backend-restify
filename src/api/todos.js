@@ -4,7 +4,6 @@ var Todo = require('../models/todo');
 
 var findTodoBefore = function(request, response, next) {
     var todo = Todo.findById(request.params.id);
-    console.log('FIND', todo)
 
     if (!todo) {
         return next(new restify.NotFoundError('Todo not found.'));
@@ -23,7 +22,6 @@ module.exports = function(api) {
 
     api.post('/todos', function(request, response, next) {
         var todo = Todo.create(request.body);
-
         response.status(201);
         response.send(todo);
         next();
@@ -32,7 +30,7 @@ module.exports = function(api) {
     api.del('/todos', function(request, response, next) {
         Todo.archive();
 
-        response.send(204, null);
+        response.send(204, []);
         next();
     });
 
@@ -41,8 +39,7 @@ module.exports = function(api) {
         next();
     });
 
-    api.put('/todos/:id', findTodoBefore, function(request, response, next) {
-        console.log('TODO', request.todo)
+    api.post('/todos/:id', findTodoBefore, function(request, response, next) {
         request.todo.completed = request.body.completed;
 
         request.todo.save();

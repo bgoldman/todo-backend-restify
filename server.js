@@ -36,8 +36,7 @@ server.get(/\/static\/?.*/, restify.serveStatic({ directory: './public' }));
 // set the default charset is UTF-8, saving us from having to set it in every route
 server.pre(function(request, response, next) {
     response.charSet('utf-8');
-
-    return next();
+    next();
 });
 
 // api/index.js will include all of our API routes

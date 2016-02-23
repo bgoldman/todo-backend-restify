@@ -1,4 +1,5 @@
-var _ = require('lodash');
+var _      = require('lodash');
+var config = require('config');
 
 var todos = {};
 
@@ -17,6 +18,8 @@ Todo.prototype.save = function() {
         var lastTodo = _.last(todos);
         this.id      = lastTodo ? (lastTodo.id + 1) : 1;
     }
+
+    this.url = config.get('server.api_root') + '/todos/' + this.id;
 
     todos[this.id] = this;
 };

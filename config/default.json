@@ -1,6 +1,7 @@
 {
     "server": {
-        "environment": undefined,
+        "api_root":    "http://localhost",
+        "environment": null,
         "port":        3000
     }
 }
