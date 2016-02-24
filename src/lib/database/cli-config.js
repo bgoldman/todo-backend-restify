@@ -1,8 +1,8 @@
-var config = require('config');
+import config from 'config';
 
 var conf = config.get('database.connection');
 
-module.exports = {
+export default {
     url:      conf.url,
     dialect:  conf.engine,
     host:     conf.host,

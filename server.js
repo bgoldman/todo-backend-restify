@@ -1,9 +1,10 @@
-var config  = require('config');
-var restify = require('restify');
+import config  from 'config';
+import restify from 'restify';
 
-var Database = require('./src/lib/database');
+import Package from './package.json';
 
-var Package = require('./package.json');
+import API      from './src/api';
+import Database from './src/lib/database';
 
 // rather than hardcode the name and version, just pull it out of package.json :)
 var server = restify.createServer({
@@ -44,8 +45,8 @@ server.pre(function(request, response, next) {
     next();
 });
 
-// api/index.js will include all of our API routes
-require('./src/api')(server);
+// pass the server instance to api/index.js will include all of our API routes
+API(server);
 
 // we need to allow a port override in deployments using env vars
 var port = config.get('server.port');

@@ -30,7 +30,7 @@ if (conf.connection.url) {
 // just a simple wrapper around Sequelize that allows us to manage the instance,
 // set some sensible defaults like underscored=true and paranoid=true,
 // and keep track of paths for returning URLs
-var Database = {
+export default {
     sequelize: null,
 
     connect: function() {
@@ -77,5 +77,3 @@ var Database = {
         return model;
     }
 };
-
-module.exports = Database;

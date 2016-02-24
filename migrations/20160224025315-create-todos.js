@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
     up: function (queryInterface, Sequelize) {
         queryInterface.createTable(
             'todos',

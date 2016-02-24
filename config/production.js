@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "server": {
         "api_root":    "http://todo-backend-restify.heroku.com",
         "environment": "production",

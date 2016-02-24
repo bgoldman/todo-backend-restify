@@ -1,9 +1,9 @@
-var _       = require('lodash');
-var config  = require('config');
-var hooks   = require('hooks');
-var request = require('superagent');
+import _       from 'lodash';
+import config  from 'config';
+import hooks   from 'hooks';
+import request from 'superagent';
 
-var Todo = require('../../src/models/todo');
+import Todo from '../../src/models/todo';
 
 var currentTodo = null;
 var defaultTodo = Todo.build({id: 1, title: 'default'})

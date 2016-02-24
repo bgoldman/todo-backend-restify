@@ -1,6 +1,6 @@
-var restify = require('restify');
+import restify from 'restify';
 
-var Todo = require('../models/todo');
+import Todo from '../models/todo';
 
 var findTodoBefore = function(request, response, next) {
     return Todo.findById(request.params.id).then(function(todo) {
@@ -14,7 +14,7 @@ var findTodoBefore = function(request, response, next) {
     });
 };
 
-module.exports = function(api) {
+export default function(api) {
     api.get('/todos', function(request, response, next) {
         return Todo.allOrdered().then(function(todos) {
             response.send(todos);

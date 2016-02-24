@@ -1,8 +1,8 @@
-var Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-var Database = require('../lib/database');
+import Database from '../lib/database';
 
-var Todo = Database.define('todo', {
+export default Database.define('todo', {
     // id:        auto,
     // createdAt: auto,
     // updatedAt: auto,
@@ -53,5 +53,3 @@ var Todo = Database.define('todo', {
         }
     }
 });
-
-module.exports = Todo;

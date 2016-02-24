@@ -1,5 +1,7 @@
-module.exports = function(api) {
-    require('./todos')(api);
+import TodosAPI from './todos';
+
+export default function(api) {
+    TodosAPI(api);
 
     api.get('/', function(request, response, next) {
         response.send({
