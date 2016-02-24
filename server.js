@@ -38,7 +38,7 @@ server.get(/\/static\/?.*/, restify.serveStatic({directory: './public'}));
 
 // set the default charset to UTF-8 and the default content-type to json,
 // saving us from having to set it in every route
-server.pre(function(request, response, next) {
+server.pre((request, response, next) => {
     response.contentType = 'json';
     response.charSet('utf-8');
     next();
@@ -53,11 +53,11 @@ const port = config.get('server.port');
 // connect to the database and launch the app!
 console.log('Connecting to database...');
 
-Database.connect().then(function() {
+Database.connect().then(() => {
     console.log('    ...connected to database.');
     console.log('Starting Restify server...');
 
-    server.listen(port, function() {
+    server.listen(port, () => {
         console.log('    ...%s running Restify server on port %s', server.name, port);
     });
 });

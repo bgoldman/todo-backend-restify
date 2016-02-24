@@ -1,7 +1,7 @@
 'use strict';
 
 export default {
-    up: function (queryInterface, Sequelize) {
+    up(queryInterface, Sequelize) {
         queryInterface.createTable(
             'todos',
             {
@@ -41,7 +41,7 @@ export default {
         )
     },
 
-    down: function (queryInterface, Sequelize) {
+    down(queryInterface, Sequelize) {
         queryInterface.dropTable('todos');
     }
 };

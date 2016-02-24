@@ -21,7 +21,7 @@ export default Database.define('todo', {
         allowNull:    true,
         defaultValue: false,
 
-        get: function() {
+        get() {
             return !!this.getDataValue('completed');
         },
 
@@ -44,11 +44,11 @@ export default Database.define('todo', {
     basePath: '/todos',
 
     classMethods: {
-        allOrdered: function() {
+        allOrdered() {
             return this.findAll({order: 'sort_order'});
         },
 
-        archiveCompleted: function() {
+        archiveCompleted() {
             return this.destroy({where: {completed: true}});
         }
     }

@@ -35,11 +35,11 @@ if (url) {
 export default {
     sequelize: null,
 
-    connect: function() {
+    connect() {
         return sequelize.authenticate();
     },
 
-    define: function(name, fields, options) {
+    define(name, fields, options) {
         let model = null;
 
         _.defaultsDeep(options, {
@@ -47,23 +47,23 @@ export default {
             underscored: auto_timestamps,
 
             instanceMethods: {
-                toJSON: function() {
+                toJSON() {
                     return _.omit(this.get(), model.privateAttributes)
                 }
             },
 
             classMethods: {
-                url: function(id) {
+                url(id) {
                     return config.get('server.api_root') + this.urlPath(id);
                 },
 
-                urlPath: function(id) {
+                urlPath(id) {
                     return model.basePath + '/' + id;
                 }
             },
 
             getterMethods: {
-                url: function() {
+                url() {
                     return model.url(this.id);
                 }
             }

@@ -13,43 +13,49 @@ const localApiRoot     = config.get('server.api_root');
 const hardcodedApiRoot = 'http://todo-backend-restify.heroku.com';
 
 // replace all server URLs with the URLs of this computer before validating
-hooks.beforeEachValidation(function(transaction) {
+hooks.beforeEachValidation((transaction) => {
     transaction.real.body = transaction.real.body
                                .split(localApiRoot)
                                .join(hardcodedApiRoot);
 });
 
 // get the first todo ID to be used for other tests
-hooks.beforeValidation('Todos > Todo Collection > Create a Todo', function(transaction) {
-    currentTodo = Todo.build(JSON.parse(transaction.real.body));
-});
+hooks.beforeValidation(
+    'Todos > Todo Collection > Create a Todo',
+    transaction => {
+        currentTodo = Todo.build(JSON.parse(transaction.real.body));
+    }
+);
 
 // recreate currentTodo and reset the ID after deleting all todos
-hooks.after('Todos > Todo Collection > Delete All Todos', function(transaction, done) {
-    const {title, completed, order} = currentTodo;
+hooks.after(
+    'Todos > Todo Collection > Delete All Todos',
+    (transaction, done) => {
+        const {title, completed, order} = currentTodo;
 
-    const todo = {title, completed, order};
+        const todo = {title, completed, order};
 
-    const url = localApiRoot + Todo.basePath;
+        const url = localApiRoot + Todo.basePath;
 
-    request
-        .post(url)
-        .send(todo)
-        .end(function(error, response) {
-            if (error) {
-                transaction.fail = error.message;
+        request
+            .post(url)
+            .send(todo)
+            .end((error, response) => {
+                if (error) {
+                    transaction.fail = error.message;
 
-                return done();
-            }
+                    return done();
+                }
 
-            currentTodo = response.body;
+                currentTodo = response.body;
 
-            done();
-        });
-});
+                done();
+            });
+    }
+);
 
 // set request URLs to the current ID before any entity requests
-hooks.beforeEach(function(transaction) {
+hooks.beforeEach((transaction) => {
     const defaultTodoPath = defaultTodo.url.replace(localApiRoot, '');
 
     // only do this for requests on individual entities
@@ -78,7 +84,7 @@ hooks.beforeEach(function(transaction) {
 })
 
 // set URLs and assignments from default to current before validating responses
-hooks.beforeEachValidation(function(transaction) {
+hooks.beforeEachValidation((transaction) => {
     // occasionally there isn't a current todo, so we skip this
     if (!currentTodo) {
         return;
