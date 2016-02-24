@@ -1,10 +1,10 @@
 import config  from 'config';
 import restify from 'restify';
 
-import Package from './package.json';
-
 import API      from './src/api';
 import Database from './src/lib/database';
+
+import Package from './package.json';
 
 // rather than hardcode the name and version, just pull it out of package.json :)
 const {name, version} = Package;

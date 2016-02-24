@@ -1,4 +1,5 @@
-export default {
+// not using `export default` because the config module can't read it that way
+module.exports = {
     "server": {
         "api_root":    "http://todo-backend-restify.heroku.com",
         "environment": "production",

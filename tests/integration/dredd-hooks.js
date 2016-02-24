@@ -13,7 +13,7 @@ const localApiRoot     = config.get('server.api_root');
 const hardcodedApiRoot = 'http://todo-backend-restify.heroku.com';
 
 // replace all server URLs with the URLs of this computer before validating
-hooks.beforeEachValidation((transaction) => {
+hooks.beforeEachValidation(transaction => {
     transaction.real.body = transaction.real.body
                                .split(localApiRoot)
                                .join(hardcodedApiRoot);
@@ -55,7 +55,7 @@ hooks.after(
 );
 
 // set request URLs to the current ID before any entity requests
-hooks.beforeEach((transaction) => {
+hooks.beforeEach(transaction => {
     const defaultTodoPath = defaultTodo.url.replace(localApiRoot, '');
 
     // only do this for requests on individual entities
@@ -63,7 +63,7 @@ hooks.beforeEach((transaction) => {
         return;
     }
 
-    let todo   = currentTodo;
+    let   todo = currentTodo;
     const body = JSON.parse(transaction.request.body || '{}');
 
     // this functionality is not currently being used until Aglio/API Blueprint
@@ -84,7 +84,7 @@ hooks.beforeEach((transaction) => {
 })
 
 // set URLs and assignments from default to current before validating responses
-hooks.beforeEachValidation((transaction) => {
+hooks.beforeEachValidation(transaction => {
     // occasionally there isn't a current todo, so we skip this
     if (!currentTodo) {
         return;

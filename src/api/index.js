@@ -1,6 +1,6 @@
 import TodosAPI from './todos';
 
-export default (api) => {
+export default api => {
     TodosAPI(api);
 
     api.get('/', (request, response, next) => {

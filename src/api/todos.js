@@ -14,16 +14,16 @@ const findTodoBefore = (request, response, next) => {
     });
 };
 
-export default (api) => {
+export default api => {
     api.get('/todos', (request, response, next) => {
-        return Todo.allOrdered().then((todos) => {
+        return Todo.allOrdered().then(todos => {
             response.send(todos);
             next();
         });
     });
 
     api.post('/todos', (request, response, next) => {
-        return Todo.create(request.body).then((todo) => {
+        return Todo.create(request.body).then(todo => {
             response.status(201);
             response.send(todo);
             next();
@@ -46,7 +46,7 @@ export default (api) => {
         const {body, todo} = request;
 
         return todo.update(body).then(() => {
-            response.send(this);
+            response.send(todo);
             next();
         });
     });
