@@ -6,8 +6,8 @@ var request = require('superagent');
 var Todo = require('../../src/models/todo');
 
 var currentTodo = null;
-var defaultTodo = Todo.build({id: 1})
-var fakeTodo    = Todo.build({id: 'fake'});
+var defaultTodo = Todo.build({id: 1, title: 'default'})
+var fakeTodo    = Todo.build({id: 'fake', title: 'fake'});
 
 var localApiRoot     = config.get('server.api_root');
 var hardcodedApiRoot = 'http://todo-backend-restify.heroku.com';
@@ -21,18 +21,22 @@ hooks.beforeEachValidation(function(transaction) {
 
 // get the first todo ID to be used for other tests
 hooks.beforeValidation('Todos > Todo Collection > Create a Todo', function(transaction) {
-    currentTodo = JSON.parse(transaction.real.body);
+    currentTodo = Todo.build(JSON.parse(transaction.real.body));
 });
 
 // recreate currentTodo and reset the ID after deleting all todos
 hooks.after('Todos > Todo Collection > Delete All Todos', function(transaction, done) {
-    delete currentTodo.id;
+    var todo = {
+        title:     currentTodo.title,
+        completed: currentTodo.completed,
+        order:     currentTodo.order
+    };
 
     var url = localApiRoot + Todo.basePath;
 
     request
         .post(url)
-        .send(currentTodo)
+        .send(todo)
         .end(function(error, response) {
             if (error) {
                 transaction.fail = error.message;

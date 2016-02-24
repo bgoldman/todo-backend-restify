@@ -25,12 +25,20 @@ A [meatier](https://github.com/mattkrick/meatier) alternative. Like meatier, but
 
 ### API
 
-Category | Name                                             | Comments
--------- | ------------------------------------------------ | --------
-Routing  | [Restify](http://www.restify.com/)               | The fastest API router, and pleasantly minimalist
-Testing  | [Dredd](http://dredd.readthedocs.org/en/latest/) | Very useful tool for testing your API endpoints from your existing API Blueprint specs
-Docs     | [Aglio](https://github.com/danielgtaylor/aglio)  | Convenient API doc generator using your existing API Blueprint specs
-Specs    | [API Blueprint](https://apiblueprint.org/)       | Portable API spec format using Markdown, supported by Apiary, Aglio, and more
+Category       | Name                                             | Comments
+-------------- | ------------------------------------------------ | --------
+Routing        | [Restify](http://www.restify.com/)               | The fastest API router, and pleasantly minimalist
+Testing        | [Dredd](http://dredd.readthedocs.org/en/latest/) | Very useful tool for testing your API endpoints from your existing API Blueprint specs
+Docs           | [Aglio](https://github.com/danielgtaylor/aglio)  | Convenient API doc generator using your existing API Blueprint specs
+Specs          | [API Blueprint](https://apiblueprint.org/)       | Portable API spec format using Markdown, supported by Apiary, Aglio, and more
+
+### Data
+
+Category        | Name                                              | Comments
+--------------- | ------------------------------------------------- | --------
+ORM             | [Sequelize](http://www.sequelizejs.com/)          | The most popular Node.js ORM, supports multiple databases, handles entity relationships, has transactional support, uses validator.js, and much more
+Server database | [PostgreSQL](http://www.postgresql.org/)          | One of the most popular open source databases, free tier on Heroku, easily deployable with Heroku and AWS, and plugs in nicely with Sequelize - but if you want to use a different database, just make sure it works with Sequelize and change your config files
+Local database  | [sqlite3](https://github.com/mapbox/node-sqlite3) | Defaulting to this simple, no-frills, single-file database for dev environment
 
 ### Application
 
@@ -72,18 +80,30 @@ Make sure the local server runs properly
 npm start
 ```
 
+Run database migrations
+
+```bash
+npm run db:migrate
+```
+
 Go to http://127.0.0.1:3000/ and make sure you see something.
 If you see something, it's working :)
 
 ## Directory Structure
 
-Path        | Comments
------------ | --------
-/           | Root directory. Contains .gitignore, api-spec.apib, LICENSE, package.json, README.md, and server.js.
-/public     | Public directory for static files that might need to come from the API. Contains nothing, unless you need to serve static files.
-/src        | Where all your source code lives. Contains other folders.
-/src/api    | API routes. Contains files which each represent a set of routes.
-/src/models | Database models. Contains files which usually each represent a database table.
+Path               | Comments
+------------------ | --------
+/                  | Root directory contains .gitignore, api-spec.apib, LICENSE, package.json, Procfile, README.md, and server.js.
+/config            | One config file for each environment, plus default.json.
+/migrations        | The initial database schema and all schema changes, in chronological order built-in to the filename.
+/public            | Public directory for static files that might need to come from the API. Contains nothing, unless you need to serve static files.
+/src               | Where all your source code lives. Contains other folders.
+/src/api           | API routes. Contains files which each represent a set of routes.
+/src/lib           | Library files used by the rest of the project.
+/src/models        | Database models. Contains files which usually each represent a database table.
+/tests             | Your tests, separated by type in different folders.
+/tests/integration | Integration tests. Test each API endpoint.
+/tests/unit        | TBD
 
 ## Developing
 
@@ -91,6 +111,12 @@ Update packages each time you pull new code from Github
 
 ```bash
 npm install
+```
+
+Run migrations each time you pull new code from Github
+
+```bash
+npm run db:migrate
 ```
 
 Run the local server at the beginning of each coding session
@@ -103,21 +129,63 @@ View your app here: http://127.0.0.1:3000/
 
 Static files are available under this path: http://127.0.0.1:3000/static/
 
-Every time you save your code, the server gets restarted because we use nodemon
+Every time you save your code, nodemon restarts the server :)
+
+## Database
+
+### Schema Changes
+
+Create a new migration file each time you need to make a change to the schema
+
+```bash
+npm run db:migration:create
+```
+
+Rename your migration file to something meaningful
+
+```bash
+mv migrations/unnamed-migration migrations/20160224025315-create-todos.js
+```
+
+Run the migration tool (see below)
+
+### Tools
+
+Run database migrations
+
+```bash
+npm run db:migrate
+```
+
+Undo the last database migrations
+
+```bash
+npm run db:migrate:undo
+```
+
+Run production database migration (make sure this is deliberate, and be careful)
+
+```bash
+npm run production:db:migrate
+```
+
+Undo the last production database migration
+
+```bash
+npm run production:db:migrate:undo
+```
 
 ## Testing
 
 Run Dredd to check the API against the spec
 
 ```bash
-npm run test-api-spec
+npm run test:integrations
 ```
 
 ## Deployment
 
-### Code
-
-#### Setup
+### Setup
 
 Set up Heroku
 
@@ -137,7 +205,11 @@ Link your local repo to Heroku (the last arg is the name of your heroku app)
 heroku git:remote todo-backend-restify
 ```
 
-#### Releasing
+Your database should work by default if you're on Heroku and using postgres,
+but if you're using something else or on a different platform,
+make sure to update your environment variable for DATABASE_URL
+
+### Releasing
 
 Deployment is handled automatically by Heroku.
 Make sure the "GitHub Connected" deployment option is enabled.
@@ -148,6 +220,12 @@ Deploy manually if you aren't using connected repos
 
 ```bash
 git push heroku master
+```
+
+Start production server manually (if you're not on Heroku, and aren't using Procfile, then do this from the server command line)
+
+```bash
+npm run production:start
 ```
 
 #### Debugging
@@ -163,14 +241,14 @@ heroku logs
 Run Aglio to preview the API docs as you edit the spec, with hot reloading
 
 ```bash
-npm run preview-api-docs
+npm run preview:api-docs
 ```
 
 Run Markdown Preview to preview the README file as you edit it,
 with hot reloading
 
 ```bash
-npm run preview-readme
+npm run preview:readme
 ```
 
 ## Contributing

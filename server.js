@@ -1,6 +1,8 @@
 var config  = require('config');
 var restify = require('restify');
 
+var Database = require('./src/lib/database');
+
 var Package = require('./package.json');
 
 // rather than hardcode the name and version, just pull it out of package.json :)
@@ -34,8 +36,10 @@ server.use(restify.queryParser());
 // serves static documents from the `/public` directory
 server.get(/\/static\/?.*/, restify.serveStatic({ directory: './public' }));
 
-// set the default charset is UTF-8, saving us from having to set it in every route
+// set the default charset to UTF-8 and the default content-type to json,
+// saving us from having to set it in every route
 server.pre(function(request, response, next) {
+    response.contentType = 'json';
     response.charSet('utf-8');
     next();
 });
@@ -46,7 +50,14 @@ require('./src/api')(server);
 // we need to allow a port override in deployments using env vars
 var port = config.get('server.port');
 
-// let's go!
-server.listen(port, function() {
-    console.log('%s running Restify server on port %s', server.name, port);
+// connect to the database and launch the app!
+console.log('Connecting to database...');
+
+Database.connect().then(function() {
+    console.log('    ...connected to database.');
+    console.log('Starting Restify server...');
+
+    server.listen(port, function() {
+        console.log('    ...%s running Restify server on port %s', server.name, port);
+    });
 });

@@ -14,23 +14,33 @@
     "config": "^1.19.0",
     "forever": "^0.15.1",
     "lodash": "^4.5.1",
+    "pg": "^4.4.6",
     "restify": "^4.0.3",
+    "sequelize": "^3.19.3",
+    "sequelize-cli": "^2.3.1",
+    "sqlite3": "^3.1.1",
     "superagent": "^1.7.2"
   },
   "devDependencies": {
     "aglio": "^2.2.0",
     "dredd": "^1.0.5",
     "markdown-live": "^1.0.8",
-    "nodemon": "^1.8.1"
+    "nodemon": "^1.8.1",
+    "sqlite3": "^3.1.1"
   },
   "engines": {
     "node": "^5.6.0"
   },
   "scripts": {
     "start": "nodemon server.js",
-    "production": "forever --minUptime=1000 --spinSleepTime=1000 server.js",
-    "preview-api-docs": "(sleep 3 && open http://localhost:4000) & aglio -i api-spec.apib --theme-variables=streak --theme-template=triple -s -p 4000",
-    "preview-readme": "mdlive *.md",
-    "test-api-spec": "dredd --language=nodejs --server='nc -z localhost 3000 || node server.js' --hookfiles=tests/integration/dredd-hooks.js api-spec.apib http://localhost:3000"
+    "db:migrate": "sequelize db:migrate --config=src/lib/database/cli-config.js",
+    "db:migrate:undo": "sequelize db:migrate:undo --config=src/lib/database/cli-config.js",
+    "db:migration:create": "sequelize migration:create --config=src/lib/database/cli-config.js",
+    "preview:api-docs": "(sleep 3 && open http://localhost:4000) & aglio -i api-spec.apib --theme-variables=streak --theme-template=triple -s -p 4000",
+    "preview:readme": "mdlive *.md",
+    "production:db:migrate": "heroku run npm run db:migrate",
+    "production:db:migrate:undo": "heroku run npm run db:migrate:undo",
+    "production:start": "forever --minUptime=1000 --spinSleepTime=1000 server.js",
+    "test:integrations": "dredd --language=nodejs --server='nc -z localhost 3000 || node server.js' --hookfiles=tests/integration/dredd-hooks.js api-spec.apib http://localhost:3000"
   }
 }

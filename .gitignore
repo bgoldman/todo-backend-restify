@@ -2,6 +2,7 @@
 .DS_Store
 
 # files
+*.sqlite
 npm-debug.log
 TODO
 

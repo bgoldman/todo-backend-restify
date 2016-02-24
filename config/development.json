@@ -1,5 +1,11 @@
 {
     "server": {
         "environment": "development"
+    },
+    "database": {
+        "connection": {
+            "engine": "sqlite",
+            "file":   "db.sqlite"
+        }
     }
 }

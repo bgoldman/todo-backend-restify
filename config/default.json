@@ -3,5 +3,21 @@
         "api_root":    "http://localhost:3000",
         "environment": null,
         "port":        3000
+    },
+    "database": {
+        "auto_timestamps": true,
+        "connection": {
+            "engine":      null,
+            "host":        null,
+            "name":        null,
+            "username":    null,
+            "password":    null
+        },
+        "soft_delete": true,
+        "pool": {
+            "max":  1,
+            "min":  1,
+            "idle": 10000
+        }
     }
 }
