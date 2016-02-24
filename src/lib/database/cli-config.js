@@ -1,6 +1,6 @@
 import config from 'config';
 
-var conf = config.get('database.connection');
+const conf = config.get('database.connection');
 
 export default {
     url:      conf.url,

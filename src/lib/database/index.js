@@ -1,30 +1,32 @@
-var _         = require('lodash');
-var config    = require('config');
-var Sequelize = require('sequelize');
+import _         from 'lodash';
+import config    from 'config';
+import Sequelize from 'sequelize';
 
-var conf = config.get('database');
+const conf = config.get('database');
 
-var sequelize;
+const {
+    auto_timestamps,
+    connection: {url, name, username, password, engine, host, file},
+    pool,
+    soft_delete
+} = config.get('database');
 
-if (conf.connection.url) {
-    sequelize = new Sequelize(conf.connection.url);
+let sequelize = null;
+
+if (url) {
+    sequelize = new Sequelize(url);
 } else {
-    sequelize = new Sequelize(
-        conf.connection.name,
-        conf.connection.username,
-        conf.connection.password,
-        {
-            host:    conf.connection.host,
-            dialect: conf.connection.engine,
-            storage: conf.connection.file,
+    sequelize = new Sequelize(name, username, password, {
+        dialect: engine,
+        host:    host,
+        storage: file,
 
-            pool: conf.pool && {
-                max:  conf.pool.max,
-                min:  conf.pool.min,
-                idle: conf.pool.idle
-            }
+        pool: pool && {
+            max:  pool.max,
+            min:  pool.min,
+            idle: pool.idle
         }
-    );
+    });
 }
 
 // just a simple wrapper around Sequelize that allows us to manage the instance,
@@ -38,11 +40,11 @@ export default {
     },
 
     define: function(name, fields, options) {
-        var model;
+        let model = null;
 
         _.defaultsDeep(options, {
-            paranoid:    conf.soft_delete,
-            underscored: conf.auto_timestamps,
+            paranoid:    soft_delete,
+            underscored: auto_timestamps,
 
             instanceMethods: {
                 toJSON: function() {
@@ -65,12 +67,14 @@ export default {
                     return model.url(this.id);
                 }
             }
-        })
+        });
+
+        const {basePath, privateAttributes} = options;
 
         model = sequelize.define(name, fields, options);
 
-        model.basePath          = options.basePath;
-        model.privateAttributes = options.privateAttributes || [];
+        model.basePath          = basePath;
+        model.privateAttributes = privateAttributes || [];
 
         model.privateAttributes.push('deletedAt');
 

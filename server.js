@@ -7,10 +7,9 @@ import API      from './src/api';
 import Database from './src/lib/database';
 
 // rather than hardcode the name and version, just pull it out of package.json :)
-var server = restify.createServer({
-    name:    Package.name,
-    version: Package.version
-});
+const {name, version} = Package;
+
+const server = restify.createServer({name, version});
 
 // cleans up the URLs to remove slash multiples and removes trialing slashes
 server.pre(restify.pre.sanitizePath());
@@ -35,7 +34,7 @@ server.use(restify.gzipResponse());
 server.use(restify.queryParser());
 
 // serves static documents from the `/public` directory
-server.get(/\/static\/?.*/, restify.serveStatic({ directory: './public' }));
+server.get(/\/static\/?.*/, restify.serveStatic({directory: './public'}));
 
 // set the default charset to UTF-8 and the default content-type to json,
 // saving us from having to set it in every route
@@ -49,7 +48,7 @@ server.pre(function(request, response, next) {
 API(server);
 
 // we need to allow a port override in deployments using env vars
-var port = config.get('server.port');
+const port = config.get('server.port');
 
 // connect to the database and launch the app!
 console.log('Connecting to database...');

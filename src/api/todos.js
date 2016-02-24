@@ -2,7 +2,7 @@ import restify from 'restify';
 
 import Todo from '../models/todo';
 
-var findTodoBefore = function(request, response, next) {
+const findTodoBefore = function(request, response, next) {
     return Todo.findById(request.params.id).then(function(todo) {
         if (!todo) {
             return next(new restify.NotFoundError('Todo not found.'));
@@ -43,8 +43,9 @@ export default function(api) {
     });
 
     api.patch('/todos/:id', findTodoBefore, function(request, response, next) {
-        console.log(request.body, request.todo.toJSON());
-        return request.todo.update(request.body).then(function() {
+        const {body, todo} = request;
+
+        return todo.update(body).then(function() {
             response.send(this);
             next();
         });
