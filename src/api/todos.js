@@ -40,11 +40,9 @@ export default api => {
     });
 
     api.patch('/todos/:id', findTodoBefore, async (request, response) => {
-        const {body, todo} = request;
+        await request.todo.update(request.body);
 
-        await todo.update(body);
-
-        response.send(todo);
+        response.send(request.todo);
     });
 
     api.del('/todos/:id', findTodoBefore, async (request, response) => {

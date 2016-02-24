@@ -33,7 +33,8 @@ hooks.after(
         const {title, completed, order} = currentTodo;
 
         const todo = {title, completed, order};
-        const url  = localApiRoot + Todo.basePath;
+
+        const url = localApiRoot + Todo.basePath;
 
         const response = await request.post(url).send(todo).end();
 
@@ -50,7 +51,8 @@ hooks.beforeEach(transaction => {
         return;
     }
 
-    let   todo = currentTodo;
+    let todo = currentTodo;
+
     const body = JSON.parse(transaction.request.body || '{}');
 
     // this functionality is not currently being used until Aglio/API Blueprint

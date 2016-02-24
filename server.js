@@ -1,10 +1,10 @@
 import config  from 'config';
 import restify from 'restify';
 
+import Package from './package.json';
+
 import API      from './src/api';
 import Database from './src/lib/database';
-
-import Package from './package.json';
 
 // rather than hardcode the name and version, just pull it out of package.json :)
 const {name, version} = Package;
@@ -51,13 +51,12 @@ API(server);
 const port = config.get('server.port');
 
 // connect to the database and launch the app!
-console.log('Connecting to database...');
-
-Database.connect().then(() => {
+(async () => {
+    console.log('Connecting to database...');
+    await Database.connect();
     console.log('    ...connected to database.');
-    console.log('Starting Restify server...');
 
-    server.listen(port, () => {
-        console.log('    ...%s running Restify server on port %s', server.name, port);
-    });
-});
+    console.log('Starting Restify server...');
+    await server.listen(port);
+    console.log('    ...%s running Restify server on port %s', server.name, port);
+})();

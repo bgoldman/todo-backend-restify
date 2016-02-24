@@ -21,11 +21,9 @@ export default Database.define('todo', {
         allowNull:    true,
         defaultValue: false,
 
-        get() { return !!this.getDataValue('completed'); },
+        validate: {isBoolean: true},
 
-        validate: {
-            isBoolean: true
-        }
+        get: () => !!this.getDataValue('completed'),
     },
     order: {
         type:         Sequelize.INTEGER(4),

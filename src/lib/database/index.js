@@ -2,11 +2,9 @@ import _         from 'lodash';
 import config    from 'config';
 import Sequelize from 'sequelize';
 
-const conf = config.get('database');
-
 const {
     auto_timestamps,
-    connection: {url, name, username, password, engine, host, file},
+    connection: {url, ...conf},
     pool,
     soft_delete
 } = config.get('database');
@@ -16,6 +14,8 @@ let sequelize = null;
 if (url) {
     sequelize = new Sequelize(url);
 } else {
+    const {name, username, password, engine, host, file} = conf;
+
     sequelize = new Sequelize(name, username, password, {
         dialect: engine,
         host:    host,
@@ -47,25 +47,17 @@ export default {
             underscored: auto_timestamps,
 
             instanceMethods: {
-                toJSON() {
-                    return _.omit(this.get(), model.privateAttributes)
-                }
+                toJSON: () => _.omit(this.get(), model.privateAttributes)
             },
 
             classMethods: {
-                url(id) {
-                    return config.get('server.api_root') + this.urlPath(id);
-                },
+                url: id => config.get('server.api_root') + this.urlPath(id),
 
-                urlPath(id) {
-                    return model.basePath + '/' + id;
-                }
+                urlPath: id => model.basePath + '/' + id
             },
 
             getterMethods: {
-                url() {
-                    return model.url(this.id);
-                }
+                url: () => model.url(this.id)
             }
         });
 
