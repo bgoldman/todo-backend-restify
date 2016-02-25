@@ -2,7 +2,8 @@ import config from 'config';
 
 const conf = config.get('database.connection');
 
-export default {
+// not using `export default` because sequelize-cli can't read it that way
+module.exports = {
     url:      conf.url,
     dialect:  conf.engine,
     host:     conf.host,

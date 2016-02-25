@@ -1,6 +1,7 @@
 'use strict';
 
-export default {
+// not using `export default` because sequelize-cli can't read it that way
+module.exports = {
     up(queryInterface, Sequelize) {
         queryInterface.createTable(
             'todos',
