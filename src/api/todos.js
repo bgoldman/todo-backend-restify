@@ -2,59 +2,54 @@ import restify from 'restify';
 
 import Todo from '../models/todo';
 
-const findTodoBefore = (request, response, next) => {
-    return Todo.findById(request.params.id).then((todo) => {
-        if (!todo) {
-            return next(new restify.NotFoundError('Todo not found.'));
-        }
+const findTodoBefore = async (request, response, next) => {
+    const todo = await Todo.findById(request.params.id);
 
-        request.todo = todo;
+    if (!todo) {
+        next(new restify.NotFoundError('Todo not found.'));
+        return;
+    }
 
-        next();
-    });
+    request.todo = todo;
+
+    next();
 };
 
 export default api => {
-    api.get('/todos', (request, response, next) => {
-        return Todo.allOrdered().then(todos => {
-            response.send(todos);
-            next();
-        });
+    api.get('/todos', async (request, response) => {
+        const todos = await Todo.allOrdered();
+
+        response.send(todos);
     });
 
-    api.post('/todos', (request, response, next) => {
-        return Todo.create(request.body).then(todo => {
-            response.status(201);
-            response.send(todo);
-            next();
-        });
+    api.post('/todos', async (request, response) => {
+        const todo = await Todo.create(request.body);
+
+        response.status(201);
+        response.send(todo);
     });
 
-    api.del('/todos', (request, response, next) => {
-        return Todo.archiveCompleted().then(() => {
-            response.send(200, []);
-            next();
-        });
+    api.del('/todos', async (request, response) => {
+        await Todo.archiveCompleted();
+
+        response.send(200, []);
     });
 
-    api.get('/todos/:id/', findTodoBefore, (request, response, next) => {
+    api.get('/todos/:id/', findTodoBefore, (request, response) => {
         response.send(request.todo);
-        next();
     });
 
-    api.patch('/todos/:id', findTodoBefore, (request, response, next) => {
+    api.patch('/todos/:id', findTodoBefore, async (request, response) => {
         const {body, todo} = request;
 
-        return todo.update(body).then(() => {
-            response.send(todo);
-            next();
-        });
+        await todo.update(body);
+
+        response.send(todo);
     });
 
-    api.del('/todos/:id', findTodoBefore, (request, response, next) => {
-        return request.todo.destroy().then(() => {
-            response.send(204, null);
-            next();
-        });
+    api.del('/todos/:id', findTodoBefore, async (request, response) => {
+        await request.todo.destroy();
+
+        response.send(204, null);
     });
 };

@@ -21,9 +21,7 @@ export default Database.define('todo', {
         allowNull:    true,
         defaultValue: false,
 
-        get() {
-            return !!this.getDataValue('completed');
-        },
+        get() { return !!this.getDataValue('completed'); },
 
         validate: {
             isBoolean: true
@@ -44,12 +42,8 @@ export default Database.define('todo', {
     basePath: '/todos',
 
     classMethods: {
-        allOrdered() {
-            return this.findAll({order: 'sort_order'});
-        },
+        allOrdered() { return this.findAll({order: 'sort_order'}); },
 
-        archiveCompleted() {
-            return this.destroy({where: {completed: true}});
-        }
+        archiveCompleted() { return this.destroy({where: {completed: true}}); }
     }
 });

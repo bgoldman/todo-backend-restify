@@ -14,9 +14,8 @@ const hardcodedApiRoot = 'http://todo-backend-restify.heroku.com';
 
 // replace all server URLs with the URLs of this computer before validating
 hooks.beforeEachValidation(transaction => {
-    transaction.real.body = transaction.real.body
-                               .split(localApiRoot)
-                               .join(hardcodedApiRoot);
+    const r = transaction.real;
+    r.body  = r.body.split(localApiRoot).join(hardcodedApiRoot);
 });
 
 // get the first todo ID to be used for other tests
@@ -30,27 +29,15 @@ hooks.beforeValidation(
 // recreate currentTodo and reset the ID after deleting all todos
 hooks.after(
     'Todos > Todo Collection > Delete All Todos',
-    (transaction, done) => {
+    async (transaction) => {
         const {title, completed, order} = currentTodo;
 
         const todo = {title, completed, order};
+        const url  = localApiRoot + Todo.basePath;
 
-        const url = localApiRoot + Todo.basePath;
+        const response = await request.post(url).send(todo).end();
 
-        request
-            .post(url)
-            .send(todo)
-            .end((error, response) => {
-                if (error) {
-                    transaction.fail = error.message;
-
-                    return done();
-                }
-
-                currentTodo = response.body;
-
-                done();
-            });
+        currentTodo = response.body;
     }
 );
 
@@ -81,7 +68,7 @@ hooks.beforeEach(transaction => {
                                .replace(defaultTodoPath, currentTodoUrlPath);
 
     return transaction;
-})
+});
 
 // set URLs and assignments from default to current before validating responses
 hooks.beforeEachValidation(transaction => {
@@ -90,7 +77,7 @@ hooks.beforeEachValidation(transaction => {
         return;
     }
 
-    const currentIdAssignment = '"id":' + currentTodo.id;
+    const currentIdAssignment = `"id":${currentTodo.id}`;
     const defaultIdAssignment = '"id":1';
 
     transaction.real.body = transaction.real.body
