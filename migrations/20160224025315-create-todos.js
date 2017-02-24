@@ -1,9 +1,8 @@
 'use strict';
 
-// not using `export default` because sequelize-cli can't read it that way
 module.exports = {
     up(queryInterface, Sequelize) {
-        queryInterface.createTable(
+         return queryInterface.createTable(
             'todos',
             {
                 id: {
@@ -39,10 +38,10 @@ module.exports = {
                     defaultValue: 1
                 }
             }
-        )
+        );
     },
 
     down(queryInterface, Sequelize) {
-        queryInterface.dropTable('todos');
+        return queryInterface.dropTable('todos');
     }
 };

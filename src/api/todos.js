@@ -7,7 +7,6 @@ const findTodoBefore = async (request, response, next) => {
 
     if (!todo) {
         next(new restify.NotFoundError('Todo not found.'));
-        return;
     }
 
     request.todo = todo;
@@ -35,7 +34,7 @@ export default api => {
         response.send(200, []);
     });
 
-    api.get('/todos/:id/', findTodoBefore, (request, response) => {
+    api.get('/todos/:id', findTodoBefore, (request, response) => {
         response.send(request.todo);
     });
 

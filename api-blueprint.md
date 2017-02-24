@@ -16,7 +16,7 @@ Todos API is a todo storage backend for [TodoMVC](//todomvc.com).
 
 ### Create a Todo [POST]
 
-The `completed` attribute will always be set as `false` for new Todo items.
+The `completed` field will always be set as `false` for new Todo objects.
 
 **Body Parameters**
 
@@ -27,9 +27,9 @@ order | boolean | optional | 1
 
 **Returns**
 
-A new Todo item.
+A new Todo object.
 
-+ Request (application/json)
++ Request Success (application/json)
 
             {
                 "title": "dredd"
@@ -51,7 +51,9 @@ A new Todo item.
 
 **Returns**
 
-A list of Todo items in the order they were created.
+A list of Todo objects in the order they were created.
+
++ Request Success (application/json)
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -67,12 +69,14 @@ A list of Todo items in the order they were created.
 
 ### Delete All Todos [DELETE]
 
-All Todo items will be deleted.
-These Todo items will no longer be returned by the API.
+All Todo objects will be deleted.
+These Todo objects will no longer be returned by the API.
 
 **Returns**
 
 An empty array.
+
++ Request Success (application/json)
 
 + Response 200
 
@@ -95,7 +99,9 @@ id   | integer | required | *n/a*
 
 **Returns**
 
-The requested Todo item, or a 404 Not Found error.
+The requested Todo object, or a 404 Not Found error.
+
++ Request Success (application/json)
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -106,6 +112,8 @@ The requested Todo item, or a 404 Not Found error.
                 "order": 1,
                 "url": "http://todo-backend-restify.heroku.com/todos/1"
             }
+
++ Request Failure: Not Found (application/json)
 
 + Response 404 (application/json; charset=utf-8)
 
@@ -134,9 +142,9 @@ order     | boolean | optional | 1
 
 **Returns**
 
-The updated Todo item, or a 404 Not Found error.
+The updated Todo object, or a 404 Not Found error.
 
-+ Request (application/json)
++ Request Success (application/json)
 
             {
                 "title": "dredd",
@@ -154,6 +162,8 @@ The updated Todo item, or a 404 Not Found error.
                 "order": 1,
                 "url": "http://todo-backend-restify.heroku.com/todos/1"
             }
+
++ Request Failure: Not Found (application/json)
 
 + Response 404 (application/json; charset=utf-8)
 
@@ -176,7 +186,11 @@ id   | integer | required | *n/a*
 
 The null value, or a 404 Not Found error.
 
++ Request Success (application/json)
+
 + Response 204
+
++ Request Failure: Not Found (application/json)
 
 + Response 404 (application/json; charset=utf-8)
 

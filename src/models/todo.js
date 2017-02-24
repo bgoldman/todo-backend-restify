@@ -2,11 +2,19 @@ import Sequelize from 'sequelize';
 
 import Database from '../lib/database';
 
-export default Database.define('todo', {
-    // id:        auto,
-    // createdAt: auto,
-    // updatedAt: auto,
-    // deletedAt: auto
+export default Database.define('Todo', {
+    createdAt: {
+        type:      Sequelize.DATE,
+        allowNull: true
+    },
+    updatedAt: {
+        type:      Sequelize.DATE,
+        allowNull: true
+    },
+    deletedAt: {
+        type:      Sequelize.DATE,
+        allowNull: true
+    },
     title: {
         type:      Sequelize.STRING(128),
         allowNull: false,

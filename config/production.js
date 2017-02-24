@@ -1,7 +1,7 @@
 // not using `export default` because the config module can't read it that way
 module.exports = {
     "server": {
-        "api_root":    "http://todo-backend-restify.heroku.com",
+        "api_root":    "https://todo-backend-restify.herokuapp.com",
         "environment": "production",
         "port":        process.env.PORT
     },

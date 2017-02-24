@@ -22,12 +22,15 @@
     "restify": "^4.0.3",
     "sequelize": "^3.19.3",
     "sequelize-cli": "^2.3.1",
-    "sqlite3": "^3.1.1",
     "superagent": "^1.7.2"
   },
   "devDependencies": {
     "aglio": "^2.2.0",
+    "babel-eslint": "^5.0.0",
     "dredd": "^1.0.5",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
     "markdown-live": "^1.0.8",
     "nodemon": "^1.8.1",
     "sqlite3": "^3.1.1"
@@ -40,16 +43,18 @@
     "build": "npm run build:clean && npm run build:js",
     "build:clean": "rm -rf _build && mkdir _build",
     "build:js": "babel . --ignore=node_modules --out-dir=_build --source-maps=inline --copy-files",
-    "db:migrate": "npm run build && sequelize db:migrate --config=_build/src/lib/database/cli-config.js",
-    "db:migrate:undo": "npm run build && sequelize db:migrate:undo --config=_build/src/lib/database/cli-config.js",
+    "db:migrate": "npm run build && sequelize db:migrate --config=_build/src/lib/database/cli-config.js --migrations-path=_build/migrations",
+    "db:migrate:undo": "npm run build && sequelize db:migrate:undo --config=_build/src/lib/database/cli-config.js --migrations-path=_build/migrations",
     "db:migration:create": "npm run build && sequelize migration:create --config=_build/src/lib/database/cli-config.js",
+    "lint": "npm run lint:js",
+    "lint:js": "eslint src --fix",
     "postinstall": "npm run build",
-    "preview:api-docs": "(sleep 3 && open http://localhost:4000) & aglio --input=api-spec.apib --theme-variables=streak --theme-template=triple --server --port=4000",
+    "preview:api-docs": "(sleep 3 && open http://localhost:4000) & aglio --input=api-blueprint.md --theme-variables=streak --theme-template=triple --server --port=4000",
     "preview:readme": "mdlive *.md",
     "production:db:migrate": "heroku run npm run db:migrate",
     "production:db:migrate:undo": "heroku run npm run db:migrate:undo",
     "production:start": "cd _build && forever --minUptime=1000 --spinSleepTime=1000 server.js",
-    "test": "npm run build && npm run test:integrations",
-    "test:integrations": "dredd --language=nodejs --server='node _build/server.js' --hookfiles=_build/tests/integration/dredd-hooks.js api-spec.apib http://localhost:3000"
+    "test": "npm run lint && npm run build && npm run test:integrations",
+    "test:integrations": "dredd --language=nodejs --server='node _build/server.js' --hookfiles=_build/tests/integration/dredd-hooks.js api-blueprint.md http://localhost:3000"
   }
 }

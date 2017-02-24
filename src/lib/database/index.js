@@ -6,7 +6,8 @@ const {
     auto_timestamps,
     connection: {url, ...conf},
     pool,
-    soft_delete
+    soft_delete,
+    underscored_fields
 } = config.get('database');
 
 let sequelize = null;
@@ -44,7 +45,8 @@ export default {
 
         _.defaultsDeep(options, {
             paranoid:    soft_delete,
-            underscored: auto_timestamps,
+            timestamps:  auto_timestamps,
+            underscored: underscored_fields,
 
             instanceMethods: {
                 toJSON: () => _.omit(this.get(), model.privateAttributes)

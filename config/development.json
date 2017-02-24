@@ -1,6 +1,8 @@
 {
     "server": {
-        "environment": "development"
+        "api_root":    "http://localhost:3000",
+        "environment": "development",
+        "port":        3000
     },
     "database": {
         "connection": {

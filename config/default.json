@@ -1,8 +1,8 @@
 {
     "server": {
-        "api_root":    "http://localhost:3000",
+        "api_root":    null,
         "environment": null,
-        "port":        3000
+        "port":        null
     },
     "database": {
         "auto_timestamps": true,
@@ -18,6 +18,7 @@
             "max":  1,
             "min":  1,
             "idle": 10000
-        }
+        },
+        "underscored_fields": true
     }
 }
