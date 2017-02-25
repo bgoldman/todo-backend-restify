@@ -7,18 +7,17 @@
     "database": {
         "auto_timestamps": true,
         "connection": {
-            "engine":      null,
-            "host":        null,
-            "name":        null,
-            "username":    null,
-            "password":    null
+            "engine":   null,
+            "host":     null,
+            "name":     null,
+            "username": null,
+            "password": null
         },
         "soft_delete": true,
         "pool": {
             "max":  1,
             "min":  1,
             "idle": 10000
-        },
-        "underscored_fields": true
+        }
     }
 }
