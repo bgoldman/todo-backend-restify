@@ -91,19 +91,19 @@ If you see something, it's working :)
 
 ## Directory Structure
 
-Path               | Comments
------------------- | --------
-/                  | Root directory contains .gitignore, api-spec.apib, LICENSE, package.json, Procfile, README.md, and server.js.
-/config            | One config file for each environment, plus default.json.
-/migrations        | The initial database schema and all schema changes, in chronological order built-in to the filename.
-/public            | Public directory for static files that might need to come from the API. Contains nothing, unless you need to serve static files.
-/src               | Where all your source code lives. Contains other folders.
-/src/api           | API routes. Contains files which each represent a set of routes.
-/src/lib           | Library files used by the rest of the project.
-/src/models        | Database models. Contains files which usually each represent a database table.
-/tests             | Your tests, separated by type in different folders.
-/tests/integration | Integration tests. Test each API endpoint.
-/tests/unit        | TBD
+Path              | Comments
+----------------- | --------
+/                 | Root directory contains .gitignore, api-spec.apib, LICENSE, package.json, Procfile, README.md, and server.js.
+/config           | One config file for each environment, plus default.json.
+/migrations       | The initial database schema and all schema changes, in chronological order built-in to the filename.
+/public           | Public directory for static files that might need to come from the API. Contains nothing, unless you need to serve static files.
+/src              | Where all your source code lives. Contains other folders.
+/src/api          | API routes. Contains files which each represent a set of routes.
+/src/lib          | Library files used by the rest of the project.
+/src/models       | Database models. Contains files which usually each represent a database table.
+/test             | Your tests, separated by type in different folders.
+/test/integration | Integration tests. Test each API endpoint.
+/test/unit        | TBD
 
 ## Developing
 

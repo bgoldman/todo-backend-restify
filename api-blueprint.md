@@ -42,12 +42,12 @@ A new Todo object.
                 "title": "dredd",
                 "completed": false,
                 "order": 1,
-                "url": "http://todo-backend-restify.heroku.com/todos/1"
+                "url": "/todos/1"
             }
 
 
 
-### List all Todos [GET]
+### List All Todos [GET]
 
 **Returns**
 
@@ -62,7 +62,7 @@ A list of Todo objects in the order they were created.
                 "title": "dredd",
                 "completed": false,
                 "order": 1,
-                "url": "http://todo-backend-restify.heroku.com/todos/1"
+                "url": "/todos/1"
             }]
 
 
@@ -110,7 +110,7 @@ The requested Todo object, or a 404 Not Found error.
                 "title": "dredd",
                 "completed": false,
                 "order": 1,
-                "url": "http://todo-backend-restify.heroku.com/todos/1"
+                "url": "/todos/1"
             }
 
 + Request Failure: Not Found (application/json)
@@ -150,7 +150,7 @@ The updated Todo object, or a 404 Not Found error.
                 "title": "dredd",
                 "completed": true,
                 "order": 1,
-                "url": "http://todo-backend-restify.heroku.com/todos/1"
+                "url": "/todos/1"
             }
 
 + Response 200 (application/json; charset=utf-8)
@@ -160,7 +160,7 @@ The updated Todo object, or a 404 Not Found error.
                 "title": "dredd",
                 "completed": true,
                 "order": 1,
-                "url": "http://todo-backend-restify.heroku.com/todos/1"
+                "url": "/todos/1"
             }
 
 + Request Failure: Not Found (application/json)

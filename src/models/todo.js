@@ -2,24 +2,24 @@ import Sequelize from 'sequelize';
 
 import Database from '../lib/database';
 
-export default Database.define('Todo', {
+export default Database.define('todo', {
   createdAt: {
-    type:      Sequelize.DATE,
+    type: Sequelize.DATE,
     allowNull: true,
-    field:     'created_at',
+    field: 'created_at',
   },
   updatedAt: {
-    type:      Sequelize.DATE,
+    type: Sequelize.DATE,
     allowNull: true,
-    field:     'updated_at',
+    field: 'updated_at',
   },
   deletedAt: {
-    type:      Sequelize.DATE,
+    type: Sequelize.DATE,
     allowNull: true,
-    field:     'deleted_at',
+    field: 'deleted_at',
   },
   title: {
-    type:      Sequelize.STRING(128),
+    type: Sequelize.STRING(128),
     allowNull: false,
 
     validate: {
@@ -28,23 +28,23 @@ export default Database.define('Todo', {
     },
   },
   completed: {
-    type:         Sequelize.BOOLEAN,
-    allowNull:    true,
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
     defaultValue: false,
 
     validate: { isBoolean: true },
 
-    get: () => !!this.getDataValue('completed'),
+    get() { return !!this.getDataValue('completed'); },
   },
   order: {
-    type:         Sequelize.INTEGER(4),
-    field:        'sort_order',
-    allowNull:    true,
+    type: Sequelize.INTEGER(4),
+    field: 'sort_order',
+    allowNull: true,
     defaultValue: 1,
 
     validate: {
       isNumeric: true,
-      isInt:     { min: 1, max: 1000 },
+      isInt: { min: 1, max: 1000 },
     },
   },
 }, {
@@ -53,6 +53,8 @@ export default Database.define('Todo', {
   classMethods: {
     allOrdered() { return this.findAll({ order: 'sort_order' }); },
 
-    archiveCompleted() { return this.destroy({ where: { completed: true } }); },
+    destroyAll() { return this.destroy({ where: { deletedAt: null } }); },
+
+    destroyCompleted() { return this.destroy({ where: { completed: true } }); },
   },
 });

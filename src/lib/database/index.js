@@ -22,8 +22,8 @@ if (url) {
     storage: file,
 
     pool: pool && {
-      max:  pool.max,
-      min:  pool.min,
+      max: pool.max,
+      min: pool.min,
       idle: pool.idle,
     },
   });
@@ -33,37 +33,35 @@ if (url) {
 // set some sensible defaults like underscored=true and paranoid=true,
 // and keep track of paths for returning URLs
 export default {
-  sequelize: null,
-
   connect() {
     return sequelize.authenticate();
   },
 
-  define(name, fields, options) {
+  define(modelName, fields, options) {
     let model = null;
 
     _.defaultsDeep(options, {
-      paranoid:   soft_delete,
+      paranoid: soft_delete,
       timestamps: auto_timestamps,
 
       instanceMethods: {
-        toJSON: () => _.omit(this.get(), model.privateAttributes),
+        toJSON() { return _.omit(this.get(), model.privateAttributes); },
       },
 
       classMethods: {
-        url: id => config.get('server.api_root') + this.urlPath(id),
+        fullUrl(id) { return config.get('server.api_root') + this.url(id); },
 
-        urlPath: id => `${model.basePath}/${id}`,
+        url: id => `${model.basePath}/${id}`,
       },
 
       getterMethods: {
-        url: () => model.url(this.id),
+        url() { return model.url(this.id); },
       },
     });
 
     const { basePath, privateAttributes } = options;
 
-    model = sequelize.define(name, fields, options);
+    model = sequelize.define(modelName, fields, options);
 
     model.basePath = basePath;
     model.privateAttributes = privateAttributes || [];
