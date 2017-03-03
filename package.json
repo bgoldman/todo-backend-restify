@@ -32,6 +32,7 @@
     "eslint-config-airbnb-base": "^11.1.0",
     "markdown-live": "^1.0.8",
     "nodemon": "^1.11.0",
+    "pre-commit": "^1.2.2",
     "sqlite3": "^3.1.1"
   },
   "engines": {
